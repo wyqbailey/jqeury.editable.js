@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Jqeury.editable.js by wyqbailey</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/wyqbailey/jqeury.editable.js">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Jqeury.editable.js</h1>
+            <h2>jquery edit talbe plugin </h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/wyqbailey/jqeury.editable.js/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/wyqbailey/jqeury.editable.js/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>jqeury.editable.js</h1>
+
+<h2>作用</h2>
+
+<p>jqeury.editable.js用于行内编辑单元格数据，即双击后将表格单元格转为输入元素（input或select），输入完成后使用ajax提交数据，完成修改功能。</p>
+
+<h2>用法</h2>
+
+<pre><code>$("#tableid").ediTable({submit:"url.html"});
+</code></pre>
+
+<p><strong>注意</strong>：需要编辑的td单元格，必须有name属性，如name="num"</p>
+
+<p><strong>数据发送</strong>：默认使用input输入框，编辑之后（值有变化），将发送ajax请求，请求格式是： submit地址?name=name值&amp;value=用户输入值</p>
+
+<h2>使用select</h2>
+
+<p>如需使用select下拉菜单，有两种方式，一种是静态数据，给td添加options属性，参考格式如下：</p>
+
+<pre><code>&lt;td name="num" options="[{value:'10',text:'10'},{value:'30',text:'30'},{value:'50',text:'50'}]"&gt;100&lt;/td&gt;
+</code></pre>
+
+<p>数据请遵循该格式，插件会自动生成select。</p>
+
+<p>第二种方式是动态数据，通过ajax请求,需要给td添加dataURL属性，参考格式如下：</p>
+
+<pre><code>&lt;td name="sale" dataURL="xxx.html"&gt;20&lt;/td&gt;
+</code></pre>
+
+<p>按照上面的格式，插件会自动发送ajax请求获取select数据，ajax请求格式为：dataURL地址?name=name值，数据获取成功后，会自动插入select。</p>
+
+<h2>option</h2>
+
+<pre><code>submit：数据提交地址，必须
+event：交互事件，默认为dblclick
+editSelector：用于配置表格中可编辑的子元素，默认为td（所有单元格），也可使用如td.edit(只有class="edit"的td才会编辑)
+success：修改成功之后的回调函数。默认为null。可用于修改之后的提示或其他关联操作，默认附带一个参数result（ajax请求成功之后的返回数据）
+preData：预处理数据方法，用于组织其他自定义附加数据。该方法默认附带一个参数td，指代当前编辑的单元格，可根据实际需要以该td为基点组织数据。示例如下：
+    preData:function(td){
+       //td为当前被编辑的单元格，可根据该td获取其他元素，如其父元素tr或其他兄弟节点
+       var tr = td.parent();//此处示例获取tr
+       var id = tr.attr("id");//此处示例获取tr的id属性值，可根据需要自己编写代码
+       return {idx:id}; //最后必须返回一组数据,数据个数自定义（必须使用json格式{key:value,key:value}）
+       //返回的数据会被自动追加到ajax请求的后面，拼成的格式为：submit地址?name=name值&amp;value=用户输入值&amp;idx=tr的id值
+    }
+</code></pre>
+
+<p>配置项的使用方法</p>
+
+<pre><code>$("#tableid").ediTable({
+    submit:"url.html",
+    editSelector:"td.edit",
+    success:function(){alert("修改成功");}
+});
+</code></pre>
+
+<h2>欢迎使用</h2>
+
+<p>欢迎使用，如有意见或建议，可发送邮件至<a href="mailto:wyqbailey@gmail.com">wyqbailey@gmail.com</a>，或直接在github上反馈。</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/wyqbailey">wyqbailey</a> can be found on <a href="https://github.com/wyqbailey/jqeury.editable.js">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
